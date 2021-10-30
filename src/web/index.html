@@ -1,17 +1,28 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoBox</title>
 </head>
+
 <body>
     <div id="app">
         <h1>{{ message }}</h1>
         <h2>Wallet Status: {{ walletStatusMessage }}</h2>
+        <template v-if="connectWalletVisible">
+            <button v-on:click="connectWallet">Connect Wallet</button>
+        </template>
+        <template v-if="sendVisible">
+            <label for="toAddress">To Address</label>
+            <input id="toAddresss" type="text" v-model="toAddress">
+            <button v-on:click="sendToAddress">Send</button>
+        </template>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="index.js"></script>
 </body>
+
 </html>
