@@ -4,6 +4,7 @@ var app = new Vue({
         activated: false,
         message: "Welcome to VideoBox!",
         toAddress: "",
+        toAmount: "0.01",
         walletAvailable: false,
         walletConnected: false
     },
@@ -55,7 +56,7 @@ var app = new Vue({
             let transaction = {
                 from: ethereum.selectedAddress,
                 to: this.toAddress,
-                value: web3.utils.numberToHex(web3.utils.toWei("0.01"))
+                value: web3.utils.numberToHex(web3.utils.toWei(this.toAmount))
             };
 
             ethereum.request({ method: 'eth_sendTransaction', params: [transaction]});

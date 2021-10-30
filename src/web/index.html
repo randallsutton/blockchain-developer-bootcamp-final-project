@@ -17,6 +17,12 @@
         <template v-if="sendVisible">
             <label for="toAddress">To Address</label>
             <input id="toAddresss" type="text" v-model="toAddress">
+            <br />
+            <br />
+            <label for="toAmount">To Amount</label>
+            <input id="toAmount" type="text" v-model="toAmount">
+            <br />
+            <br />
             <button v-on:click="sendToAddress">Send</button>
         </template>
     </div>
