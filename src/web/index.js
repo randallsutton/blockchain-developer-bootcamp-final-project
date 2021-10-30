@@ -2,11 +2,13 @@ var app = new Vue({
     el: "#app",
     data: {
         activated: false,
+        balance: "",
         message: "Welcome to VideoBox!",
         toAddress: "",
         toAmount: "0.01",
         walletAvailable: false,
-        walletConnected: false
+        walletConnected: false,
+        web3: null
     },
     mounted() {
         this.activate();
@@ -34,6 +36,8 @@ var app = new Vue({
                     this.walletConnected = true;
 
                     this.setupWeb3();
+
+                    this.loadBalance();
                 }
             }
             else 
@@ -50,13 +54,22 @@ var app = new Vue({
 
             console.log("connected to wallet");
         },
+        async loadBalance() {
+            console.log("getting wallet balance");
+
+            let hexBalance = await ethereum.request({ method: 'eth_getBalance', params:[this.web3.currentProvider.selectedAddress, "latest"]})
+            let weiBalance = this.web3.utils.hexToNumberString(hexBalance);
+            let etherBalance = this.web3.utils.fromWei(weiBalance);
+
+            this.balance = `${etherBalance}`;
+        },
         sendToAddress() {
             console.log(`sending to ${this.toAddress}`);
 
             let transaction = {
                 from: ethereum.selectedAddress,
                 to: this.toAddress,
-                value: web3.utils.numberToHex(web3.utils.toWei(this.toAmount))
+                value: this.web3.utils.numberToHex(this.web3.utils.toWei(this.toAmount))
             };
 
             ethereum.request({ method: 'eth_sendTransaction', params: [transaction]});
@@ -64,7 +77,7 @@ var app = new Vue({
         setupWeb3() {
             console.log("web3 setup");
 
-            web3 = new Web3(ethereum);
+            this.web3 = new Web3(ethereum);
         }
     },
     computed: {

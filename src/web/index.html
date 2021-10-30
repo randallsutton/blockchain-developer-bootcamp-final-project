@@ -15,6 +15,7 @@
             <button v-on:click="connectWallet">Connect Wallet</button>
         </template>
         <template v-if="sendVisible">
+            <h2>Balance: {{ balance }}</h2>
             <label for="toAddress">To Address</label>
             <input id="toAddresss" type="text" v-model="toAddress">
             <br />
